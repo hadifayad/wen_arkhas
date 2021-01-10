@@ -3,8 +3,11 @@ package com.hadi.wenarkhas.activities;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +30,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.hadi.wenarkhas.R;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 public class AddPostActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,7 +45,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
     RelativeLayout addImageLayout;
     TextInputEditText text;
     ImageView image1;
-    Uri imageUri;
+    Uri imageUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,42 +60,52 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    private void sendImage() {
-        final ProgressDialog dialog = ProgressDialog.show(AddPostActivity.this, "",
-                "Please wait...", true);
+    private void sendImage(final String image) {
+        String textString = text.getText().toString();
+        if (!textString.equals("")) {
+            final ProgressDialog dialog = ProgressDialog.show(AddPostActivity.this, "",
+                    "Please wait...", true);
 
-        String url = NetworkHelper.getUrl(NetworkHelper.ACTION_CREATE_POST);
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        dialog.dismiss();
-                        Log.d("respondCreatePost", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
+            String url = NetworkHelper.getUrl(NetworkHelper.ACTION_CREATE_POST);
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            dialog.dismiss();
+                            Log.d("respondCreatePost", response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dialog.dismiss();
 //                        Log.d("respondCreatePost", error.getMessage());
-                        Toast.makeText(AddPostActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddPostActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
 
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> params = new Hashtable<String, String>();
+                    params.put("text", "some random text");
+                    if (image != null) {
+                        params.put("image", image);
+                    } else {
+                        params.put("image", "");
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new Hashtable<String, String>();
-                params.put("text", "some random text");
-                return params;
+                    return params;
+                }
+            };
+            {
+                int socketTimeout = 30000;
+                RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                stringRequest.setRetryPolicy(policy);
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(stringRequest);
             }
-        };
-        {
-            int socketTimeout = 30000;
-            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            stringRequest.setRetryPolicy(policy);
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(stringRequest);
+        } else {
+            Toast.makeText(this, getString(R.string.please_fill_all_fields), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -122,7 +140,6 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     private void imageViewDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -152,10 +169,63 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
         dialog.show();
     }
 
+    public void createAdNadUploadImages() {
+        if (imageUri != null) {
+            try {
+                final InputStream imageStream = getContentResolver().
+                        openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                //encoding image to string
+                String image = getStringImage(selectedImage);
+                if (!image.equals("")) {
+                    sendImage(image);
+                } else {
+                    sendImage(null);
+
+                }
+
+            } catch (IOException e) {
+                sendImage(null);
+            }
+        } else {
+            sendImage(null);
+        }
+    }
+
+    public String getStringImage(Bitmap bmp) {
+
+        int currSize;
+        int currQuality = 100;
+        int maxSizeBytes = 800000;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, currQuality, baos);
+
+
+        do {
+            if (currQuality < 15) {
+                return "";
+            }
+            baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, currQuality, baos);
+            currSize = baos.toByteArray().length;
+            currQuality = currQuality - 5;
+
+        } while (currSize >= maxSizeBytes);
+
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
     @Override
     public void onClick(View v) {
         if (v == image1) {
             imageViewDialog();
         }
+    }
+
+    public void savePost(View view) {
+        createAdNadUploadImages();
     }
 }
