@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+        Intent intent = new Intent(getApplicationContext(), Login.class);
         startActivity(intent);
     }
 

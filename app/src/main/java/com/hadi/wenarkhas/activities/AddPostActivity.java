@@ -31,7 +31,7 @@ public class AddPostActivity extends AppCompatActivity {
 
         setTitle(getString(R.string.add_post));
 
-        sendImage();
+       // sendImage();
     }
 
 
