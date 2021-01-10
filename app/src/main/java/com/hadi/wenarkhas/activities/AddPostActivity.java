@@ -1,10 +1,17 @@
 package com.hadi.wenarkhas.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -16,26 +23,35 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
 import com.hadi.wenarkhas.R;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
 
 import java.util.Hashtable;
 import java.util.Map;
 
-public class AddPostActivity extends AppCompatActivity {
+public class AddPostActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final int PICK_IMAGES = 1;
+
+    RelativeLayout addImageLayout;
+    TextInputEditText text;
+    ImageView image1;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
-        setTitle(getString(R.string.add_post));
+        addImageLayout = findViewById(R.id.addImageLayout);
+        text = findViewById(R.id.text);
+        image1 = findViewById(R.id.image1);
 
-        sendImage();
+        image1.setOnClickListener(this);
     }
 
 
-    //    private void SendImage(final List<String> images) {
     private void sendImage() {
         final ProgressDialog dialog = ProgressDialog.show(AddPostActivity.this, "",
                 "Please wait...", true);
@@ -72,6 +88,74 @@ public class AddPostActivity extends AppCompatActivity {
             stringRequest.setRetryPolicy(policy);
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
+        }
+    }
+
+    public void addImage(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGES);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGES && resultCode == RESULT_OK && null != data) {
+
+            imageUri = data.getData();
+            updateImage();
+
+        }
+    }
+
+    private void updateImage() {
+        image1.setVisibility(View.GONE);
+        addImageLayout.setVisibility(View.VISIBLE);
+
+        if (imageUri != null) {
+            image1.setVisibility(View.VISIBLE);
+            addImageLayout.setVisibility(View.GONE);
+            image1.setImageURI(null);
+            image1.setImageURI(imageUri);
+        }
+    }
+
+
+
+    private void imageViewDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.what_would_you_like_to_do));
+
+        String[] options = {
+                getString(R.string.remove_image),
+                getString(R.string.cancel)
+        };
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // remove image
+                        imageUri = null;
+                        updateImage();
+                        break;
+
+                    case 4: // Cancel
+                        break;
+                }
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == image1) {
+            imageViewDialog();
         }
     }
 }

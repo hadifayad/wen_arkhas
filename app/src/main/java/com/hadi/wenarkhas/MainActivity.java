@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Intent intent = new Intent(getApplicationContext(), SignUp.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+//        startActivity(intent);
     }
 
     @Override
