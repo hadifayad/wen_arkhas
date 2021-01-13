@@ -61,7 +61,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private void sendImage(final String image) {
-        String textString = text.getText().toString();
+        final String textString = text.getText().toString();
         if (!textString.equals("")) {
             final ProgressDialog dialog = ProgressDialog.show(AddPostActivity.this, "",
                     "Please wait...", true);
@@ -88,7 +88,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new Hashtable<String, String>();
-                    params.put("text", "some random text");
+                    params.put("text", textString);
                     if (image != null) {
                         params.put("image", image);
                     } else {
