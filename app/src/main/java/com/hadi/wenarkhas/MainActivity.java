@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
-//        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+//        Intent intent = new Intent(getApplicationContext(), AddPostActivity.class);
 //        startActivity(intent);
 
     }

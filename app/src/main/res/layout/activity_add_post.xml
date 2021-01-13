@@ -23,21 +23,24 @@
                 android:fontFamily="@font/poppinsbold"
                 android:gravity="center"
                 android:text="@string/add_post"
-                android:textColor="@color/colorAccent"
+                android:background="@color/colorAccent"
+                android:textColor="#FFF"
                 android:textSize="30sp" />
 
-            <TextView
+            <Button
                 android:onClick="savePost"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:background="@drawable/roundedbutton2"
                 android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
+                android:layout_margin="10dp"
                 android:fontFamily="@font/poppinsbold"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
                 android:text="@string/save"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
 
         </RelativeLayout>
@@ -51,7 +54,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_centerInParent="true"
-                android:layout_margin="5dp"
+                android:layout_margin="15dp"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
                 android:visibility="visible" />
@@ -63,7 +66,7 @@
                 android:layout_height="150dp"
                 android:layout_centerInParent="true"
                 android:layout_margin="5dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="#D0D0D0"
                 android:onClick="addImage"
                 android:padding="0dp"
                 android:scaleType="centerCrop">
@@ -76,7 +79,11 @@
 
             </RelativeLayout>
         </RelativeLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"/>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutFullname"
             android:layout_width="match_parent"
@@ -84,7 +91,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
-            android:hint="Text">
+            android:hint="Create a post">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text"
@@ -93,5 +100,42 @@
                 android:fontFamily="@font/poppinsmedium"
                 tools:targetApi="jelly_bean" />
         </com.google.android.material.textfield.TextInputLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorAccent"/>
     </LinearLayout>
+
+
+
+
+
+<!--    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:id="@+id/relativeLayout1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+
+<!--        >-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/linearLayout_AdMob"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal" >-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@mipmap/ic_launcher" />-->
+<!--        </LinearLayout>-->
+
+
+<!--    </RelativeLayout>-->
+
+
+
 </ScrollView>
