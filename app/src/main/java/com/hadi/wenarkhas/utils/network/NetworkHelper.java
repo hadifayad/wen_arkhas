@@ -20,11 +20,11 @@ public class NetworkHelper {
 //    public static final String SERVER_IP = "5.189.150.68/wen-arkhas-web";
 
 
-//    public static final String IMAGES_PATH = "http://" + SERVER_IP + "/web/imagesads/";
-//    public static final String IMAGES_PATH_DOLLAR = "http://" + SERVER_IP + "/web/dollartobeviedinshare.jpg";
+    public static final String IMAGES_PATH = "http://" + SERVER_IP + "/web/imagesposts/";
 
     //    public static final String ACTION_GET_NOTIFICATION_AND_COUNT_OF_READ = "mobile/notifications-and-count-of-unread";
     public static final String ACTION_CREATE_POST = "mobile/create-post";
+    public static final String ACTION_GET_POSTS = "mobile/get-posts";
 
     public static String getUrl(String action) {
         String serverURL = "http://" + SERVER_IP + "/web/index.php?r=";
