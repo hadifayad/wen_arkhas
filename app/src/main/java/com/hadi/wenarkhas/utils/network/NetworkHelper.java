@@ -16,11 +16,8 @@ public class NetworkHelper {
 
     public static final String TAG = NetworkHelper.class.getName();
 
-    //    public static final String SERVER_IP = "dollartolebanesecurrency.com";
-//    public static final String SERVER_IP = "localhost/buy_and_sell_in_lebanon";
-//    public static final String SERVER_IP = "localhost/wen-arkhas-web";
-//    public static final String SERVER_IP = "10.0.2.2/wen-arkhas-web";
-    public static final String SERVER_IP = "192.168.43.78/wen-arkhas-web";
+    public static final String SERVER_IP = "10.0.2.2/wen-arkhas-web";
+//    public static final String SERVER_IP = "5.189.150.68/wen-arkhas-web";
 
 
 //    public static final String IMAGES_PATH = "http://" + SERVER_IP + "/web/imagesads/";
