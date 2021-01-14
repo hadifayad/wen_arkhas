@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hadi.wenarkhas.R;
+import com.hadi.wenarkhas.activities.PostDetailActivity;
 import com.hadi.wenarkhas.models.Post;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
 
@@ -56,23 +57,30 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Post post = this.posts.get(position);
 
-        final String imagePath = NetworkHelper.IMAGES_PATH + post.getImage();
-        Glide.with(context)
-                .load(imagePath)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.image);
+        if(post.getImage() != null && !post.getImage().equals("")) {
+            final String imagePath = NetworkHelper.IMAGES_PATH + post.getImage();
+            Glide.with(context)
+                    .load(imagePath)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.image);
+        }else{
+            holder.image.setVisibility(View.GONE);
+        }
         String text = post.getC_text();
         String shortText = text.substring(0, Math.min(text.length(), 20));
         String finalText = shortText.replace("\n", " ").replace("\r", " ");
 
-        holder.textViewTitle.setText(finalText);
+        holder.textViewTitle.setText(finalText+"...");
         holder.textViewCreationDate.setText(post.getCreation_date());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(context, .class);
-//                intent.putExtra("id", post.getId());
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                intent.putExtra("id", post.getId());
+                intent.putExtra("imageName", post.getImage());
+                intent.putExtra("text", post.getC_text());
+                intent.putExtra("userId", post.getR_user());
+                context.startActivity(intent);
             }
         });
 
