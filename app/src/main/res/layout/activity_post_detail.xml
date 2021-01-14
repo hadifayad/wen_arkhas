@@ -42,6 +42,44 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="التعليقات"
+                android:textColor="@android:color/black"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="true"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp">
+
+                <EditText
+                    android:id="@+id/textInput"
+                    android:layout_width="0dip"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:hint="إكتب تعليق..."></EditText>
+
+                <Button
+                    android:id="@+id/btnSend"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:onClick="sendComment"
+                    android:text="أرسل" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comments_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="500dp" />
         </LinearLayout>
     </ScrollView>
 
