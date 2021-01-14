@@ -14,6 +14,8 @@ public class Comment {
     String r_user;
     @SerializedName("creation_date")
     String creation_date;
+    @SerializedName("fullname")
+    String fullname;
 
     public String getId() {
         return id;
@@ -53,5 +55,13 @@ public class Comment {
 
     public void setCreation_date(String creation_date) {
         this.creation_date = creation_date;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }

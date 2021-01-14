@@ -25,7 +25,11 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hadi.wenarkhas.R;
+import com.hadi.wenarkhas.adapters.CommentsRecyclerViewAdapter;
+import com.hadi.wenarkhas.models.Comment;
+import com.hadi.wenarkhas.utils.network.GsonRequest;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
+import com.hadi.wenarkhas.utils.network.VolleySingleton;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -131,24 +135,24 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private void setupComments() {
-//        String url = NetworkHelper.getUrl(NetworkHelper.ACTION_GET_AD_COMMENTS);
-//        Map<String, String> params = new HashMap();
-//        params.put("ad", adId);
-//        GsonRequest<Comments[]> myGsonRequest = new GsonRequest<Comments[]>(Request.Method.POST, url, Comments[].class, null, params,
-//                new Response.Listener<Comments[]>() {
-//                    @Override
-//                    public void onResponse(Comments[] response) {
-//                        comments_recyclerview.setAdapter(new CommentsRecyclerViewAdapter(Arrays.asList(response)));
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                        NetworkHelper.handleError(error);
-//                    }
-//                });
-//
-//        VolleySingleton.getInstance(AdDetailActivity.this).addToRequestQueue(myGsonRequest);
+        String url = NetworkHelper.getUrl(NetworkHelper.ACTION_GET_COMMENTS_BY_POST);
+        Map<String, String> params = new HashMap();
+        params.put("postId", id);
+        GsonRequest<Comment[]> myGsonRequest = new GsonRequest<Comment[]>(Request.Method.POST, url, Comment[].class, null, params,
+                new Response.Listener<Comment[]>() {
+                    @Override
+                    public void onResponse(Comment[] response) {
+                        comments_recyclerview.setAdapter(new CommentsRecyclerViewAdapter(Arrays.asList(response)));
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        NetworkHelper.handleError(error);
+                    }
+                });
+
+        VolleySingleton.getInstance(PostDetailActivity.this).addToRequestQueue(myGsonRequest);
     }
 }

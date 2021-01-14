@@ -26,6 +26,7 @@ public class NetworkHelper {
     public static final String ACTION_CREATE_POST = "mobile/create-post";
     public static final String ACTION_GET_POSTS = "mobile/get-posts";
     public static final String ACTION_ADD_COMMENT = "mobile/add-comment";
+    public static final String ACTION_GET_COMMENTS_BY_POST = "mobile/get-comments-by-post";
 
     public static String getUrl(String action) {
         String serverURL = "http://" + SERVER_IP + "/web/index.php?r=";
