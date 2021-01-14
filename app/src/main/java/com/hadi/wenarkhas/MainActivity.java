@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-
 //        Intent intent = new Intent(getApplicationContext(), SignUp.class);
 //        startActivity(intent);
     }
