@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.hadi.wenarkhas.activities.AddPostActivity;
+import com.hadi.wenarkhas.activities.PostDetailActivity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
-//        Intent intent = new Intent(getApplicationContext(), AddPostActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), PostDetailActivity.class);
 //        startActivity(intent);
 
     }
