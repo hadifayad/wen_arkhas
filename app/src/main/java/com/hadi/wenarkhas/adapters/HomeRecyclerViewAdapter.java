@@ -56,16 +56,20 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Post post = this.posts.get(position);
 
-        final String imagePath = NetworkHelper.IMAGES_PATH + post.getImage();
-        Glide.with(context)
-                .load(imagePath)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.image);
+        if(post.getImage() != null && !post.getImage().equals("")) {
+            final String imagePath = NetworkHelper.IMAGES_PATH + post.getImage();
+            Glide.with(context)
+                    .load(imagePath)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.image);
+        }else{
+            holder.image.setVisibility(View.GONE);
+        }
         String text = post.getC_text();
         String shortText = text.substring(0, Math.min(text.length(), 20));
         String finalText = shortText.replace("\n", " ").replace("\r", " ");
 
-        holder.textViewTitle.setText(finalText);
+        holder.textViewTitle.setText(finalText+"...");
         holder.textViewCreationDate.setText(post.getCreation_date());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
