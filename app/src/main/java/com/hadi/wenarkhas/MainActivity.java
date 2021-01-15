@@ -1,14 +1,18 @@
 package com.hadi.wenarkhas;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.hadi.wenarkhas.activities.AddPostActivity;
+import com.hadi.wenarkhas.activities.AllPosts;
 import com.hadi.wenarkhas.activities.PostDetailActivity;
 
 import androidx.navigation.NavController;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
          login = (Button) header.findViewById(R.id.login);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        ImageView fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,5 +93,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void getData()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String username = prefs.getString("KEY_USERNAME", "Default Value if not found");
+        String password = prefs.getString("KEY_PASSWORD", "pass"); //return nothing if no pass saved
+
     }
 }
