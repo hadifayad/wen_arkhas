@@ -72,7 +72,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean isLogged(Context context)
+    public static boolean isLogged(Context context)
     {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -85,14 +85,14 @@ public class User {
        else return false;
     }
 
-    public String getID(Context context){
+    public static String getID(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String ID = prefs.getString("id", "");
 
         return ID;
     }
 
-    public String getFullname(Context context){
+    public static String getFullname(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String fullname = prefs.getString("fullname", "");
 

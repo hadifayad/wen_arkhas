@@ -227,7 +227,7 @@ public class Login extends  AppCompatActivity {
                                     ed.putString("fullname",response.getFullname().toString());
                                     ed.commit();
                                      dialog.dismiss();
-                      //  Toast.makeText(Login.this, "Login Successful",    Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this, "Login Successful",    Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
