@@ -77,7 +77,7 @@ public class SignUp extends AppCompatActivity {
                             public void onResponse(String response) {
 //                                dialog.dismiss();
 //                                finish();
-                                Toast.makeText(SignUp.this, response,
+                                Toast.makeText(SignUp.this, "Signup Successful",
                             Toast.LENGTH_LONG).show();
                                 Log.d("upload", response);
                                 Intent intent = new Intent(getApplicationContext(), Login.class);

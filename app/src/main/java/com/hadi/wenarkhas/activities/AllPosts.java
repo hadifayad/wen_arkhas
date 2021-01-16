@@ -16,6 +16,7 @@ import com.hadi.wenarkhas.R;
 public class AllPosts extends AppCompatActivity {
     static final String KEY_USERNAME = "username";
     static final String KEY_PASSWORD = "password";
+    static final String KEY_FULLNAME = "fullname";
     Context context;
     TextView user,pass;
     @Override
