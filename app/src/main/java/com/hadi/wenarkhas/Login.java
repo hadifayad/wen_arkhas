@@ -30,28 +30,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import android.app.Activity;
-        import android.app.ProgressDialog;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 
-        import androidx.appcompat.app.AppCompatActivity;
-
-        import com.android.volley.AuthFailureError;
-        import com.android.volley.DefaultRetryPolicy;
-        import com.android.volley.Request;
-        import com.android.volley.RequestQueue;
-        import com.android.volley.Response;
-        import com.android.volley.RetryPolicy;
-        import com.android.volley.VolleyError;
-        import com.android.volley.toolbox.StringRequest;
-        import com.android.volley.toolbox.Volley;
-        import com.google.android.material.textfield.TextInputEditText;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
 import com.hadi.wenarkhas.activities.AddPostActivity;
 import com.hadi.wenarkhas.activities.AllPosts;
 import com.hadi.wenarkhas.activities.PostDetailActivity;
@@ -64,19 +63,20 @@ import com.hadi.wenarkhas.utils.network.NetworkHelper;
 import com.hadi.wenarkhas.utils.network.VolleySingleton;
 
 import java.util.HashMap;
-        import java.util.Hashtable;
-        import java.util.Map;
+import java.util.Hashtable;
+import java.util.Map;
 
-public class Login extends  AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     static final String KEY_USERNAME = "username";
     static final String KEY_PASSWORD = "password";
     static final String KEY_FULLNAME = "fullname";
-   // static final String KEY_PASSWORD = "password";
-    private TextInputEditText username,password;
+    // static final String KEY_PASSWORD = "password";
+    private TextInputEditText username, password;
     private TextView signUpText;
-    private Button signinButton , signupButton;
+    private Button signinButton, signupButton;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,20 +87,18 @@ public class Login extends  AppCompatActivity {
         signUpText = findViewById(R.id.signUp);
 
 
+        signUpText.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
 
-
-        signUpText.setOnClickListener(new View.OnClickListener() {
-
-                                            public void onClick(View v) {
-
-                                                Intent intent = new Intent(getApplicationContext(), SignUp.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }
+                        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
         );
 
-        signinButton.setOnClickListener(new View.OnClickListener(){
+        signinButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 final ProgressDialog dialog = ProgressDialog.show(Login.this, "",
@@ -196,66 +194,62 @@ public class Login extends  AppCompatActivity {
 //
 //            }});
 
-        String serverURL = "http://5.189.150.68/wen-arkhas-web/web/index.php?r=";
-        String url = serverURL + "api/mobile/login";
+//        String serverURL = "http://5.189.150.68/wen-arkhas-web/web/index.php?r=";
+                String serverURL = "http://localhost/wen-arkhas-web/web/index.php?r=";
+                String url = serverURL + "api/mobile/login";
 
-        Map<String, String> params = new HashMap();
-        String usernamestring = username.getText().toString();
+                Map<String, String> params = new HashMap();
+                String usernamestring = username.getText().toString();
 
-        String passwordstring = password.getText().toString();
-
-
-
-        params.put("username", usernamestring);
-
-        params.put("password", passwordstring);
+                String passwordstring = password.getText().toString();
 
 
-        Log.d("tag", params.toString());
-        GsonRequest<User> myGsonRequest = new GsonRequest<User>(Request.Method.POST, url, User.class, null, params,
-                new Response.Listener<User>() {
-                    @Override
-                    public void onResponse(User response) {
+                params.put("username", usernamestring);
 
-                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Login.this);
-                                    SharedPreferences.Editor ed = prefs.edit();
-                                    ed.putString(KEY_USERNAME,  response.getUsername().toString());
-                                    ed.putString(KEY_PASSWORD, response.getPassword().toString());
-
-                                     ed.putString(KEY_FULLNAME,response.getFullname().toString());
-                                     ed.putString("id",response.getId().toString());
-                                    ed.putString("fullname",response.getFullname().toString());
-                                    ed.commit();
-                                     dialog.dismiss();
-                        Toast.makeText(Login.this, "Login Successful",    Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                params.put("password", passwordstring);
 
 
+                Log.d("tag", params.toString());
+                GsonRequest<User> myGsonRequest = new GsonRequest<User>(Request.Method.POST, url, User.class, null, params,
+                        new Response.Listener<User>() {
+                            @Override
+                            public void onResponse(User response) {
 
-                    }
+                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Login.this);
+                                SharedPreferences.Editor ed = prefs.edit();
+                                ed.putString(KEY_USERNAME, response.getUsername().toString());
+                                ed.putString(KEY_PASSWORD, response.getPassword().toString());
+
+                                ed.putString(KEY_FULLNAME, response.getFullname().toString());
+                                ed.putString("id", response.getId().toString());
+                                ed.putString("fullname", response.getFullname().toString());
+                                ed.commit();
+                                dialog.dismiss();
+                                Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
 
 
+                            }
 
-                    },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // dialog.dismiss();
-                        NetworkHelper.handleError(error);
-                    }
-                });
+
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                dialog.dismiss();
+                                NetworkHelper.handleError(error);
+                            }
+                        });
                 VolleySingleton.getInstance(Login.this).addToRequestQueue(myGsonRequest);
 
 
+            }
 
+        });
 
     }
-
-});
-
-}
 }
 
 

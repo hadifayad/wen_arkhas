@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hadi.wenarkhas.R;
 import com.hadi.wenarkhas.models.Comment;
+import com.hadi.wenarkhas.models.User;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
     Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewOutGoing, client_name, textviewIngoing,client_nameInGOING;
+        public TextView textViewOutGoing, client_name, textviewIngoing, client_nameInGOING;
 
         public MyViewHolder(View view) {
             super(view);
@@ -60,13 +61,13 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
         holder.client_name.setText(comment.getFullname());
         holder.client_nameInGOING.setText(comment.getFullname());
 
-//        if (comment.getUsername().equals(UserPreferences.getUsername(context))) {
-//            holder.textViewOutGoing.setVisibility(View.VISIBLE);
-//            holder.client_name.setVisibility(View.VISIBLE);
-//        } else {
+        if (comment.getR_user().equals(User.getID(context))) {
+            holder.textViewOutGoing.setVisibility(View.VISIBLE);
+            holder.client_name.setVisibility(View.VISIBLE);
+        } else {
             holder.textviewIngoing.setVisibility(View.VISIBLE);
             holder.client_nameInGOING.setVisibility(View.VISIBLE);
-//        }
+        }
 
 
     }

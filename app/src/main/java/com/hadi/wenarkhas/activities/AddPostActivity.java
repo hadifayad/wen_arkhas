@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.hadi.wenarkhas.R;
+import com.hadi.wenarkhas.models.User;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
 
 import java.io.ByteArrayOutputStream;
@@ -89,6 +90,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
 
                     Map<String, String> params = new Hashtable<String, String>();
                     params.put("text", textString);
+                    params.put("userId", User.getID(getApplicationContext()));
                     if (image != null) {
                         params.put("image", image);
                     } else {
