@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.hadi.wenarkhas.R;
+import com.hadi.wenarkhas.models.User;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
 
 import java.io.ByteArrayOutputStream;
@@ -73,6 +75,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
                         public void onResponse(String response) {
                             dialog.dismiss();
                             Log.d("respondCreatePost", response);
+                            finish();
                         }
                     },
                     new Response.ErrorListener() {
@@ -89,6 +92,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
 
                     Map<String, String> params = new Hashtable<String, String>();
                     params.put("text", textString);
+                    params.put("userId", User.getID(getApplicationContext()));
                     if (image != null) {
                         params.put("image", image);
                     } else {
@@ -117,14 +121,15 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
         startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGES);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGES && resultCode == RESULT_OK && null != data) {
-
             imageUri = data.getData();
             updateImage();
-
         }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void updateImage() {

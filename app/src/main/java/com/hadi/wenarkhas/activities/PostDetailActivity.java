@@ -27,6 +27,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hadi.wenarkhas.R;
 import com.hadi.wenarkhas.adapters.CommentsRecyclerViewAdapter;
 import com.hadi.wenarkhas.models.Comment;
+import com.hadi.wenarkhas.models.User;
 import com.hadi.wenarkhas.utils.network.GsonRequest;
 import com.hadi.wenarkhas.utils.network.NetworkHelper;
 import com.hadi.wenarkhas.utils.network.VolleySingleton;
@@ -120,7 +121,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     Map<String, String> params = new Hashtable<String, String>();
                     params.put("text", text);
                     params.put("postId", id);
-                    params.put("userId", "1");
+                    params.put("userId", User.getID(getApplicationContext()));
                     return params;
                 }
             };
