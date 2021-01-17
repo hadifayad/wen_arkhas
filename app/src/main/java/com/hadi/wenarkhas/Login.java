@@ -195,7 +195,7 @@ public class Login extends AppCompatActivity {
 //            }});
 
 //        String serverURL = "http://5.189.150.68/wen-arkhas-web/web/index.php?r=";
-                String serverURL = "http://localhost/wen-arkhas-web/web/index.php?r=";
+                String serverURL = "http://" + NetworkHelper.SERVER_IP + "/web/index.php?r=";
                 String url = serverURL + "api/mobile/login";
 
                 Map<String, String> params = new HashMap();

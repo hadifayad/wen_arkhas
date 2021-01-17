@@ -74,6 +74,7 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
                         public void onResponse(String response) {
                             dialog.dismiss();
                             Log.d("respondCreatePost", response);
+                            finish();
                         }
                     },
                     new Response.ErrorListener() {

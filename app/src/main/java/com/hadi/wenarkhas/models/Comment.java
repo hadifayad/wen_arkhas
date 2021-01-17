@@ -8,9 +8,9 @@ public class Comment {
     String id;
     @SerializedName("c_text")
     String c_text;
-    @SerializedName("r_post ")
+    @SerializedName("r_post")
     String r_post;
-    @SerializedName("r_user ")
+    @SerializedName("r_user")
     String r_user;
     @SerializedName("creation_date")
     String creation_date;
