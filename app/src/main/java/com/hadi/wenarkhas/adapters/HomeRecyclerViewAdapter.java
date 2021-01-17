@@ -2,7 +2,9 @@ package com.hadi.wenarkhas.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -65,13 +68,19 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                     .into(holder.image);
         }else{
             holder.image.setVisibility(View.GONE);
+            holder.textViewTitle.setTextSize(30);
+            holder.textViewTitle.setTypeface(null, Typeface.BOLD);
+            holder.textViewTitle.setCompoundDrawables(null,null,null,null);
+            holder.textViewTitle.setGravity(Gravity.BOTTOM);
+
+            holder.textViewTitle.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }
         String text = post.getC_text();
-        String shortText = text.substring(0, Math.min(text.length(), 20));
+        String shortText = text.substring(0, Math.min(text.length(), 60));
         String finalText = shortText.replace("\n", " ").replace("\r", " ");
 
-        holder.textViewTitle.setText(finalText+"...");
-        holder.textViewCreationDate.setText(post.getCreation_date());
+        holder.textViewTitle.setText(finalText+"");
+        holder.textViewCreationDate.setText(" " +post.getCreation_date()+" ");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -51,11 +51,14 @@ final boolean logged;
 
                 boolean logged = isLogged(MainActivity.this);
                 if(logged){
+                    login.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(MainActivity.this, AddPostActivity.class);
                 startActivity(intent);}
                 else {    Toast.makeText(MainActivity.this, "Please Login",    Toast.LENGTH_LONG).show();}
             }
         });
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         // Passing each menu ID as a set of Ids because each

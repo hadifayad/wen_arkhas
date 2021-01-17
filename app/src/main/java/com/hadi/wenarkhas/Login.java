@@ -228,6 +228,8 @@ public class Login extends  AppCompatActivity {
                                     ed.commit();
                                      dialog.dismiss();
                         Toast.makeText(Login.this, "Login Successful",    Toast.LENGTH_LONG).show();
+
+                      //  signinButton.setVisibility(View.GONE);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
