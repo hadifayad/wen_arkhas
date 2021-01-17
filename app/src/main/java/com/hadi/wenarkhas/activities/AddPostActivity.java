@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -120,14 +121,15 @@ public class AddPostActivity extends AppCompatActivity implements View.OnClickLi
         startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGES);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGES && resultCode == RESULT_OK && null != data) {
-
             imageUri = data.getData();
             updateImage();
-
         }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     private void updateImage() {
