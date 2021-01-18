@@ -24,6 +24,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.hadi.wenarkhas.Login;
+import com.hadi.wenarkhas.MainActivity;
 import com.hadi.wenarkhas.R;
 import com.hadi.wenarkhas.adapters.CommentsRecyclerViewAdapter;
 import com.hadi.wenarkhas.models.Comment;
@@ -36,6 +38,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+
+import static com.hadi.wenarkhas.models.User.isLogged;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -92,6 +96,12 @@ public class PostDetailActivity extends AppCompatActivity {
 
         final String text = textInput.getText().toString();
         if (!text.equals("")) {
+            boolean logged = isLogged(PostDetailActivity.this);
+            if (logged) {
+
+
+
+
             btnSend.setEnabled(false);
             String url = NetworkHelper.getUrl(NetworkHelper.ACTION_ADD_COMMENT);
             final StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -132,6 +142,11 @@ public class PostDetailActivity extends AppCompatActivity {
                 RequestQueue requestQueue = Volley.newRequestQueue(this);
                 requestQueue.add(stringRequest);
             }
+        }
+               else {    Toast.makeText(PostDetailActivity.this, "Please Login",    Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(PostDetailActivity.this, Login.class);
+                startActivity(intent);
+               }
         }
     }
 

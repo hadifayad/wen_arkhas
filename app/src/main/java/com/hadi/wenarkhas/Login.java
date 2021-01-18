@@ -230,6 +230,7 @@ public class Login extends  AppCompatActivity {
                         Toast.makeText(Login.this, "Login Successful",    Toast.LENGTH_LONG).show();
 
                       //  signinButton.setVisibility(View.GONE);
+                        MainActivity.login.setVisibility(View.INVISIBLE);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();

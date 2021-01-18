@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
@@ -26,12 +28,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import static com.hadi.wenarkhas.models.User.clearPref;
 import static com.hadi.wenarkhas.models.User.isLogged;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    Button login;
+    public static Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
 
-final boolean logged;
-         login = (Button) header.findViewById(R.id.login);
+        final boolean logged;
+        login = (Button) header.findViewById(R.id.login);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView fab = findViewById(R.id.fab);
@@ -50,14 +53,15 @@ final boolean logged;
             public void onClick(View view) {
 
                 boolean logged = isLogged(MainActivity.this);
-                if(logged){
+                if (logged) {
                     login.setVisibility(View.INVISIBLE);
-                Intent intent = new Intent(MainActivity.this, AddPostActivity.class);
-                startActivity(intent);}
-                else {    Toast.makeText(MainActivity.this, "Please Login",    Toast.LENGTH_LONG).show();}
+                    Intent intent = new Intent(MainActivity.this, AddPostActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Please Login", Toast.LENGTH_LONG).show();
+                }
             }
         });
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -78,26 +82,37 @@ final boolean logged;
 
         login.setOnClickListener(new View.OnClickListener() {
 
-                                          public void onClick(View v) {
+                                     public void onClick(View v) {
 
-                                              Intent intent = new Intent(getApplicationContext(), Login.class);
-                                              startActivity(intent);
-                                              finish();
-                                          }
-                                      }
+                                         Intent intent = new Intent(getApplicationContext(), Login.class);
+                                         startActivity(intent);
+                                         finish();
+                                     }
+                                 }
         );
 
 
 //        Intent intent = new Intent(getApplicationContext(), PostDetailActivity.class);
 //        startActivity(intent);
 
+
+
     }
+
+
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        MenuInflater findMenuItems = getMenuInflater();
+        findMenuItems.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -107,11 +122,26 @@ final boolean logged;
                 || super.onSupportNavigateUp();
     }
 
-    public void getData()
-    {
+    public void getData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String username = prefs.getString("KEY_USERNAME", "Default Value if not found");
         String password = prefs.getString("KEY_PASSWORD", "pass"); //return nothing if no pass saved
 
     }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                Toast.makeText(MainActivity.this, "Logout Successful",    Toast.LENGTH_LONG).show();
+                clearPref(MainActivity.this);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

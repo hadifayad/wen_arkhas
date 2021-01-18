@@ -3,8 +3,13 @@ package com.hadi.wenarkhas.models;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.gson.annotations.SerializedName;
+import com.hadi.wenarkhas.Login;
+import com.hadi.wenarkhas.MainActivity;
+import com.hadi.wenarkhas.R;
 
 public class User {
     static final String KEY_USERNAME = "username";
@@ -97,6 +102,22 @@ public class User {
         String fullname = prefs.getString("fullname", "");
 
         return fullname;
+    }
+
+    public static void clearPref(Context context){
+        Button login;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putString(KEY_USERNAME,  "");
+        ed.putString(KEY_PASSWORD,"");
+
+        ed.putString(KEY_FULLNAME,"");
+        ed.putString("id","");
+        ed.putString("fullname","");
+        ed.commit();
+        MainActivity.login.setVisibility(View.VISIBLE);
+
+
     }
 
 
